@@ -23,7 +23,7 @@ def column_name(index: int) -> str:
 
 
 def clean_sheet_name(name: str) -> str:
-    cleaned = re.sub(r"[:\\\\/?*\\[\\]]", "_", name).strip("'")
+    cleaned = re.sub(r"[:\\/?*\[\]]", "_", name).strip("'")
     return (cleaned or "Sheet1")[:31]
 
 
@@ -126,7 +126,7 @@ def load_rows(json_path: Path) -> list[list[object]]:
                 seen.add(key)
                 headers.append(key)
     rows: list[list[object]] = [headers]
-    rows.extend([[item.get(header, "") for header in headers] for item in data])
+    rows.extend([[item.get(header) for header in headers] for item in data])
     return rows
 
 
